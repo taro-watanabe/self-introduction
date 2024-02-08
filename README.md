@@ -11,7 +11,7 @@ Simply call:
 go run main
 ```
 
-And this will generate a config file for you.
+And this will generate a config file for you. (`config/config.json`)
 You can of course create or modify the config file manually.
 
 Now, run:
@@ -30,3 +30,19 @@ If you need to modify the config file, you can do so by:
 ```bash
 go run main --edit
 ```
+
+## Edit Guide
+
+This tool is designed to be minimal, so there aren't many complications in the tool.
+You simply have to modify
+
+- Config Construct
+- Loading Attributes
+- JSON generator questionnaires
+
+
+
+#### Disclaimer
+I do not know sh*t about Go, and this is not meant to be a serious, bug-free tool.
+But, baby steps, right?
+I would love some lessons and feedbacks in the Issues.
