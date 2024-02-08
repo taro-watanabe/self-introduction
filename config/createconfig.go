@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -25,38 +26,44 @@ func WriteConfigFile(filePath string, config Config) error {
 
 func CreateConfigFile() Config {
 	newConfig := Config{}
+	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Answer the following questions to create a new config:")
 	fmt.Print("Enter your name: ")
-	fmt.Scanln(&newConfig.Name)
+	scanner.Scan()
+	newConfig.Name = scanner.Text()
 
 	fmt.Print("Enter your Birthday (and your birthyear if you feel fancy): ")
-	fmt.Scanln(&newConfig.Birthday)
+	scanner.Scan()
+	newConfig.Birthday = scanner.Text()
 
 	fmt.Print("Enter your location: ")
-	fmt.Scanln(&newConfig.Location)
+	scanner.Scan()
+	newConfig.Location = scanner.Text()
 
 	fmt.Print("Enter your workplace: ")
-	fmt.Scanln(&newConfig.Workplace)
+	scanner.Scan()
+	newConfig.Workplace = scanner.Text()
 
 	fmt.Print("Enter your role: ")
-	fmt.Scanln(&newConfig.Role)
+	scanner.Scan()
+	newConfig.Role = scanner.Text()
 
 	fmt.Print("Enter your Github username: ")
-	fmt.Scanln(&newConfig.Github)
+	scanner.Scan()
+	newConfig.Github = scanner.Text()
 
 	fmt.Print("Enter your email: ")
-	fmt.Scanln(&newConfig.Email)
+	scanner.Scan()
+	newConfig.Email = scanner.Text()
 
-	fmt.Print("Enter your programming languages (comma separated): ")
-	var programming string
-	fmt.Scanln(&programming)
-	newConfig.Programming = append(newConfig.Programming, strings.Split(programming, ",")...)
+	fmt.Print("Enter your programming languages (comma separated, no need for space after comma): ")
+	scanner.Scan()
+	newConfig.Programming = strings.Split(scanner.Text(), ",")
 
-	fmt.Print("Enter your hobbies (comma separated): ")
-	var hobby string
-	fmt.Scanln(&hobby)
-	newConfig.Hobby = append(newConfig.Hobby, strings.Split(hobby, ",")...)
+	fmt.Print("Enter your hobbies (comma separated, no need for space after comma): ")
+	scanner.Scan()
+	newConfig.Hobby = strings.Split(scanner.Text(), ",")
 
 	// preview the config by calling the main
 	fmt.Println(GenerateSelfIntroduction(newConfig))
@@ -85,67 +92,76 @@ func updateConfig(filePath string) Config {
 		fmt.Println("Error reading config file:", err)
 		os.Exit(1)
 	}
+	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Update the following fields (press Enter to keep existing values):")
 	fmt.Printf("Name [%s]: ", existingConfig.Name)
-	var newName string
-	fmt.Scanln(&newName)
-	if newName != "" {
+	scanner.Scan()
+	var newName string = scanner.Text()
+	if scanner.Text() != "" {
 		existingConfig.Name = newName
 	}
 
 	fmt.Printf("Birthday [%s]: ", existingConfig.Birthday)
 	var newBirthday string
-	fmt.Scanln(&newBirthday)
+	scanner.Scan()
+	newBirthday = scanner.Text()
 	if newBirthday != "" {
 		existingConfig.Birthday = newBirthday
 	}
 
 	fmt.Printf("Location [%s]: ", existingConfig.Location)
 	var newLocation string
-	fmt.Scanln(&newLocation)
+	scanner.Scan()
+	newLocation = scanner.Text()
 	if newLocation != "" {
 		existingConfig.Location = newLocation
 	}
 
 	fmt.Printf("Workplace [%s]: ", existingConfig.Workplace)
 	var newWorkplace string
-	fmt.Scanln(&newWorkplace)
+	scanner.Scan()
+	newWorkplace = scanner.Text()
 	if newWorkplace != "" {
 		existingConfig.Workplace = newWorkplace
 	}
 
 	fmt.Printf("Role [%s]: ", existingConfig.Role)
 	var newRole string
-	fmt.Scanln(&newRole)
+	scanner.Scan()
+	newRole = scanner.Text()
 	if newRole != "" {
 		existingConfig.Role = newRole
 	}
 
 	fmt.Printf("Github [%s]: ", existingConfig.Github)
 	var newGithub string
-	fmt.Scanln(&newGithub)
+	scanner.Scan()
+	newGithub = scanner.Text()
 	if newGithub != "" {
 		existingConfig.Github = newGithub
 	}
 
 	fmt.Printf("Email [%s]: ", existingConfig.Email)
 	var newEmail string
-	fmt.Scanln(&newEmail)
+	scanner.Scan()
+	newEmail = scanner.Text()
 	if newEmail != "" {
 		existingConfig.Email = newEmail
 	}
 
 	fmt.Printf("Programming [%s]: ", strings.Join(existingConfig.Programming, ", "))
 	var newProgramming string
-	fmt.Scanln(&newProgramming)
+	scanner.Scan()
+	newProgramming = scanner.Text()
 	if newProgramming != "" {
 		existingConfig.Programming = strings.Split(newProgramming, ",")
 	}
 
 	fmt.Printf("Hobby [%s]: ", strings.Join(existingConfig.Hobby, ", "))
 	var newHobby string
-	fmt.Scanln(&newHobby)
+	scanner.Scan()
+	newHobby = scanner.Text()
 	if newHobby != "" {
 		existingConfig.Hobby = strings.Split(newHobby, ",")
 	}
